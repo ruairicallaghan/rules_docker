@@ -126,10 +126,10 @@ def _impl(ctx):
     )
 
     print("Writing SHA to file.")
-    sha = ctx.actions.declare_file(ctx.outputs.commit_sha.path)
+    sha = ctx.actions.declare_file(ctx.label.name + ".sha")
     ctx.actions.write(
         output = sha,
-        content = "test", 
+        content = "test\n", 
         is_executable = False,
     )
 
@@ -225,7 +225,6 @@ container_push_ = rule(
     implementation = _impl,
     outputs = {
         "digest": "%{name}.digest",
-        "commit_sha": "%{name}.commit_sha",
     },
 )
 
