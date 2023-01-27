@@ -115,6 +115,7 @@ def _impl(ctx):
     runfiles = runfiles.merge(ctx.attr._pusher[DefaultInfo].default_runfiles)
 
     exe = ctx.actions.declare_file(ctx.label.name + ctx.attr.extension)
+    print(exe)
     ctx.actions.expand_template(
         template = ctx.file.tag_tpl,
         output = exe,
@@ -136,11 +137,11 @@ def _impl(ctx):
     return [
         DefaultInfo(
             executable = exe,
+            files = depset([sha]),
             runfiles = runfiles,
         ),
         OutputGroupInfo(
             exe = [exe],
-            files = depset([sha]),
         ),
         PushInfo(
             registry = registry,
