@@ -55,6 +55,7 @@ def _impl(ctx):
         pusher_input.append(ctx.file.repository_file)
 
     tag = ctx.expand_make_variables("tag", ctx.attr.tag, {})
+    print("Tag is: " % tag)
 
     # If a tag file is provided, override <tag> with tag value
     if ctx.file.tag_file:
@@ -147,6 +148,7 @@ def _impl(ctx):
             registry = registry,
             repository = repository,
             digest = ctx.outputs.digest,
+            sha = tag,
         ),
     ]
 
