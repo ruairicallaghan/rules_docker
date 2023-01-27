@@ -136,7 +136,7 @@ def _impl(ctx):
     return [
         DefaultInfo(
             executable = exe,
-            files = depset([sha])
+            files = depset([sha]),
             runfiles = runfiles,
         ),
         OutputGroupInfo(
