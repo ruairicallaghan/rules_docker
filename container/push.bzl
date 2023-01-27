@@ -125,6 +125,7 @@ def _impl(ctx):
         is_executable = True,
     )
 
+    print("Writing SHA to file.")
     sha = ctx.actions.declare_file("commit_sha")
     ctx.actions.write(
         output = sha, 
