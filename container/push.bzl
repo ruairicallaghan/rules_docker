@@ -130,7 +130,7 @@ def _impl(ctx):
     sha = ctx.actions.declare_file(ctx.label.name + ".sha")
     ctx.actions.write(
         output = sha,
-        content = "test\n", 
+        content = tag, 
         is_executable = False,
     )
 
