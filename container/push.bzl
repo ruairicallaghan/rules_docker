@@ -125,7 +125,7 @@ def _impl(ctx):
         is_executable = True,
     )
 
-    sha = ctx.actions.declare_file(ctx.label.name + ".commit_sha")
+    sha = ctx.actions.declare_file("commit_sha")
     ctx.actions.write(
         output = sha, 
         content = "test", 
@@ -139,6 +139,7 @@ def _impl(ctx):
         ),
         OutputGroupInfo(
             exe = [exe],
+            sha = [sha],
         ),
         PushInfo(
             registry = registry,
