@@ -125,6 +125,13 @@ def _impl(ctx):
         is_executable = True,
     )
 
+    sha = ctx.actions.declare_file(ctx.label.name + ".commit_sha")
+    ctx.actions.write(
+        output = sha, 
+        content = "test", 
+        is_executable = False,
+    )
+
     return [
         DefaultInfo(
             executable = exe,
@@ -215,6 +222,7 @@ container_push_ = rule(
     implementation = _impl,
     outputs = {
         "digest": "%{name}.digest",
+        "commit_sha": "%{name}.commit_sha",
     },
 )
 
