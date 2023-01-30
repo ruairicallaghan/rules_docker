@@ -133,22 +133,22 @@ def _impl(ctx):
         is_executable = True,
     )
 
-    print("Writing SHA to file.")
-    sha = ctx.actions.declare_file(ctx.label.name + ".sha")
-    ctx.actions.write(
-        output = sha,
-        content = tag, 
-        is_executable = False,
-    )
+    # print("Writing SHA to file.")
+    # sha = ctx.actions.declare_file(ctx.label.name + ".sha")
+    # ctx.actions.write(
+    #     output = sha,
+    #     content = tag, 
+    #     is_executable = False,
+    # )
 
     return [
         DefaultInfo(
             executable = exe,
-            files = depset([sha]),
+            # files = depset([sha]),
             runfiles = runfiles,
         ),
         OutputGroupInfo(
-            exe = [exe, sha],
+            exe = [exe],
         ),
         PushInfo(
             registry = registry,
