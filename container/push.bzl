@@ -64,8 +64,14 @@ def _impl(ctx):
         pusher_input.append(ctx.file.tag_file)
 
     stamp = ctx.attr.stamp[StampSettingInfo].value
+    print("Stamp")
+    print(stamp)
     stamp_inputs = [ctx.info_file, ctx.version_file] if stamp else []
+    print("Stamp Inputs")
+    print(stamp_inputs)
     for f in stamp_inputs:
+        print("Would you stamp?")
+        print("Yes")
         pusher_args += ["-stamp-info-file", "%s" % _get_runfile_path(ctx, f)]
     pusher_input += stamp_inputs
 
