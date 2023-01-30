@@ -86,11 +86,15 @@ def _impl(ctx):
               "container_import instead.")
 
     pusher_args.append("--format={}".format(ctx.attr.format))
+    print("Pusher args")
+    print(pusher_args)
     pusher_args.append("--dst={registry}/{repository}:{tag}".format(
         registry = registry,
         repository = repository,
         tag = tag,
     ))
+    print("Pusher args")
+    print(pusher_args)
 
     if ctx.attr.skip_unchanged_digest:
         pusher_args.append("-skip-unchanged-digest")
