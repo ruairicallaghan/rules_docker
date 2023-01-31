@@ -139,6 +139,11 @@ def _impl(ctx):
         is_executable = True,
     )
 
+    print("Version file")
+    print(ctx.version_file)
+    print("Stable file")
+    print(ctx.info_file)
+
     # print("Writing SHA to file.")
     # sha = ctx.actions.declare_file(ctx.label.name + ".sha")
     # ctx.actions.write(
