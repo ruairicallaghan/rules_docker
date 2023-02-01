@@ -146,7 +146,7 @@ def _impl(ctx):
     print("Stable file")
     print(ctx.info_file)
 
-    stampd = ctx.actions.declare_file(ctx.label.name + ".stamped")
+    stampd = ctx.actions.declare_file(ctx.label.name + ".stamp")
     stamper_args += ["--dest", str(ctx.outputs.stamp.path)]
     ctx.actions.expand_template(
         template = ctx.file.stamp_tpl,
@@ -157,6 +157,14 @@ def _impl(ctx):
         output = stampd,
         is_executable = True,
     )
+
+    # print("Writing SHA to file.")
+    # sha = ctx.actions.declare_file(ctx.label.name + ".sha")
+    # ctx.actions.write(
+    #     output = sha,
+    #     content = tag, 
+    #     is_executable = False,
+    # )
 
     return [
         DefaultInfo(
