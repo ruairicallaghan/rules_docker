@@ -2,9 +2,9 @@ package main
 
 import (
 	"flag"
-	// "io/ioutil"
-	// "log"
-	// "os"
+	"io/ioutil"
+	"log"
+	"os"
 	// "github.com/bazelbuild/rules_docker/container/go/pkg/compat"
 	"github.com/bazelbuild/rules_docker/container/go/pkg/utils"
 )
@@ -33,5 +33,11 @@ func main() {
 	// if err := ioutil.WriteFile(*dest, []byte(stamped), os.ModePerm); err != nil {
 	// 	log.Fatalf("Error outputting digest file to %s: %v", *dest, err)
 	// }
+
+	stamped := "stampMe"
+	out := "stamp.txt"
+	if err := ioutil.WriteFile(out, []byte(stamped), os.ModePerm); err != nil {
+		log.Fatalf("Error outputting digest file to %s: %v", out, err)
+	}
 
 }
