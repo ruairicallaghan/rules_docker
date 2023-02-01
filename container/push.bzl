@@ -74,7 +74,7 @@ def _impl(ctx):
         print("Would you stamp?")
         print("Yes")
         pusher_args += ["-stamp-info-file", "%s" % _get_runfile_path(ctx, f)]
-        stamper_args += ["-stamp-info-file", "%s" % _get_runfile_path(ctx, f)]
+        # stamper_args += ["-stamp-info-file", "%s" % _get_runfile_path(ctx, f)]
     pusher_input += stamp_inputs
 
     # Construct container_parts for input to pusher.
@@ -147,7 +147,7 @@ def _impl(ctx):
     print(ctx.info_file)
 
     # stampd = ctx.actions.declare_file(ctx.label.name + ".stamp")
-    stamper_args += ["--dest", str(ctx.outputs.stamp.path)]
+    # stamper_args += ["--dest", str(ctx.outputs.stamp.path)]
     # ctx.actions.run(
     #     executable = ctx.executable._stamper,
     #     arguments = stamper_args,
