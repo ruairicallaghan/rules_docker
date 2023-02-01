@@ -146,9 +146,11 @@ def _impl(ctx):
     print("Stable file")
     print(ctx.info_file)
 
+    stampd = ctx.actions.declare_file(ctx.label.name + ".stamp")
     ctx.actions.run(
         executable = ctx.executable._stamper,
         arguments = stamper_args,
+        output = stamd,
     )
 
     # print("Writing SHA to file.")
