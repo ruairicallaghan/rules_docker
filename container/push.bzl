@@ -42,6 +42,7 @@ def _impl(ctx):
 
     pusher_args = []
     pusher_input = []
+    stamper_args = []
     digester_args = []
     digester_input = []
 
@@ -73,6 +74,7 @@ def _impl(ctx):
         print("Would you stamp?")
         print("Yes")
         pusher_args += ["-stamp-info-file", "%s" % _get_runfile_path(ctx, f)]
+        stamper_args += ["-stamp-info-file", "%s" % _get_runfile_path(ctx, f)]
     pusher_input += stamp_inputs
 
     # Construct container_parts for input to pusher.
@@ -143,6 +145,11 @@ def _impl(ctx):
     print(ctx.version_file)
     print("Stable file")
     print(ctx.info_file)
+
+    ctx.actions.run(
+        executable = ctx.executable._stamper,
+        arguments = stamper_args,
+    )
 
     # print("Writing SHA to file.")
     # sha = ctx.actions.declare_file(ctx.label.name + ".sha")
@@ -237,6 +244,10 @@ container_push_ = rule(
             cfg = "target",
             executable = True,
             allow_files = True,
+        ),
+        "_stamper": attr.label(
+            default = "//container/go/cmd/stamper",
+            executable = True,
         ),
     }, _layer_tools),
     executable = True,
