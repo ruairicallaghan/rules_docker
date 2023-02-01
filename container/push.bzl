@@ -146,11 +146,11 @@ def _impl(ctx):
     print("Stable file")
     print(ctx.info_file)
 
-    stampd = ctx.actions.declare_file(ctx.label.name + ".stamp")
+    # stampd = ctx.actions.declare_file(ctx.label.name + ".stamp")
     ctx.actions.run(
         executable = ctx.executable._stamper,
         arguments = stamper_args,
-        outputs = [stampd],
+        outputs = [ctx.outputs.stamp],
     )
 
     # print("Writing SHA to file.")
@@ -258,6 +258,7 @@ container_push_ = rule(
     implementation = _impl,
     outputs = {
         "digest": "%{name}.digest",
+        "stamp": "%{name}.stamp",
     },
 )
 
