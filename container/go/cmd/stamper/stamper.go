@@ -35,7 +35,7 @@ func main() {
 	// }
 
 	stamped := "stampMe"
-	out := "stamp.txt"
+	out := "examples/simple-deployment/image.push.stamp"
 	if err := ioutil.WriteFile(out, []byte(stamped), os.ModePerm); err != nil {
 		log.Fatalf("Error outputting digest file to %s: %v", out, err)
 	}
