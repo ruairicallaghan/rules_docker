@@ -247,7 +247,7 @@ container_push_ = rule(
         ),
         "_stamper": attr.label(
             default = "//container/go/cmd/stamper",
-            cfg = "stexec"
+            cfg = "stexec",
             executable = True,
         ),
     }, _layer_tools),
