@@ -21,6 +21,7 @@ licenses(["notice"])  # Apache 2.0
 exports_files([
     "push-tag.bat.tpl",
     "push-tag.sh.tpl",
+    "stamp-tag.sh.tpl",
 ])
 
 filegroup(
@@ -123,6 +124,7 @@ bzl_library(
     name = "layer",
     srcs = ["layer.bzl"],
     deps = [
+    "stamp-tag.sh.tpl",
         ":layer_tools",
         ":providers",
         "//skylib:filetype",

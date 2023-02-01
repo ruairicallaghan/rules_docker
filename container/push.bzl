@@ -74,7 +74,7 @@ def _impl(ctx):
         print("Would you stamp?")
         print("Yes")
         pusher_args += ["-stamp-info-file", "%s" % _get_runfile_path(ctx, f)]
-        # stamper_args += ["-stamp-info-file", "%s" % _get_runfile_path(ctx, f)]
+        stamper_args += ["-stamp-info-file", "%s" % _get_runfile_path(ctx, f)]
     pusher_input += stamp_inputs
 
     # Construct container_parts for input to pusher.
@@ -147,12 +147,16 @@ def _impl(ctx):
     print(ctx.info_file)
 
     # stampd = ctx.actions.declare_file(ctx.label.name + ".stamp")
-    # stamper_args += ["--dest", str(ctx.outputs.stamp.path)]
-    # ctx.actions.run(
-    #     executable = ctx.executable._stamper,
-    #     arguments = stamper_args,
-    #     outputs = [ctx.outputs.stamp],
-    # )
+    stamper_args += ["--dest", str(ctx.outputs.stamp.path)]
+    ctx.actions.expand_template(
+        template = ctx.file.stamp_tpl,
+        substitutions = {
+            "%{args}": " ".join(stamper_args),
+            "%{container_stamper}": _get_runfile_path(ctx, ctx.executable._stamper),
+        }
+        outputs =[ctx.outputs.stamp,
+        is_executable = True,
+    )
 
     # print("Writing SHA to file.")
     # sha = ctx.actions.declare_file(ctx.label.name + ".sha")
@@ -221,6 +225,11 @@ container_push_ = rule(
                   "This means that you should try to avoid running the same container_push targets in parallel.",
         ),
         "stamp": STAMP_ATTR,
+        "stamp_tpl": attr.label(
+            mandatory = True,
+            allow_single_file = True,
+            doc = "The script template to use.",
+        ),
         "tag": attr.string(
             default = "latest",
             doc = "The tag of the image.",
@@ -259,7 +268,7 @@ container_push_ = rule(
     implementation = _impl,
     outputs = {
         "digest": "%{name}.digest",
-        # "stamp": "%{name}.stamp",
+        "stamp": "%{name}.stamp",
     },
 )
 
@@ -275,6 +284,7 @@ def container_push(name, format, image, registry, repository, **kwargs):
             "@bazel_tools//src/conditions:host_windows": ".bat",
             "//conditions:default": "",
         })),
+        stamp_tpl = "//container:stamp_tag.sh.tpl",
         tag_tpl = select({
             "@bazel_tools//src/conditions:host_windows": Label("//container:push-tag.bat.tpl"),
             "//conditions:default": Label("//container:push-tag.sh.tpl"),
