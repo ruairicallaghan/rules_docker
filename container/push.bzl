@@ -153,7 +153,7 @@ def _impl(ctx):
         substitutions = {
             "%{args}": " ".join(stamper_args),
             "%{container_stamper}": _get_runfile_path(ctx, ctx.executable._stamper),
-        }
+        },
         output = stampd,
         is_executable = True,
     )
