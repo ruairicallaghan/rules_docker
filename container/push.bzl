@@ -147,6 +147,7 @@ def _impl(ctx):
     print(ctx.info_file)
 
     # stampd = ctx.actions.declare_file(ctx.label.name + ".stamp")
+    stamper_args += ["--dest", str(ctx.outputs.stamp.path)]
     ctx.actions.run(
         executable = ctx.executable._stamper,
         arguments = stamper_args,
