@@ -148,11 +148,11 @@ def _impl(ctx):
 
     # stampd = ctx.actions.declare_file(ctx.label.name + ".stamp")
     stamper_args += ["--dest", str(ctx.outputs.stamp.path)]
-    ctx.actions.run(
-        executable = ctx.executable._stamper,
-        arguments = stamper_args,
-        outputs = [ctx.outputs.stamp],
-    )
+    # ctx.actions.run(
+    #     executable = ctx.executable._stamper,
+    #     arguments = stamper_args,
+    #     outputs = [ctx.outputs.stamp],
+    # )
 
     # print("Writing SHA to file.")
     # sha = ctx.actions.declare_file(ctx.label.name + ".sha")
@@ -259,7 +259,7 @@ container_push_ = rule(
     implementation = _impl,
     outputs = {
         "digest": "%{name}.digest",
-        "stamp": "%{name}.stamp",
+        # "stamp": "%{name}.stamp",
     },
 )
 
