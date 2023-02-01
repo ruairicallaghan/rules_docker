@@ -28,7 +28,7 @@ func main() {
 		log.Printf("Destination %s was resolved to %s after stamping.", dst, stamped)
 	}
 
-	if err := ioutil.WriteFile(*dest, []byte(stamped), os.ModePerm); err != nil {
+	if err := ioutil.WriteFile(&dest, []byte(stamped), os.ModePerm); err != nil {
 		log.Fatalf("Error outputting digest file to %s: %v", dest, err)
 	}
 
