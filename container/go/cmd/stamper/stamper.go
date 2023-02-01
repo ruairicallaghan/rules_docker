@@ -2,11 +2,10 @@ package main
 
 import (
 	"flag"
-	"io/ioutil"
-	"log"
-	"os"
-
-	"github.com/bazelbuild/rules_docker/container/go/pkg/compat"
+	// "io/ioutil"
+	// "log"
+	// "os"
+	// "github.com/bazelbuild/rules_docker/container/go/pkg/compat"
 	"github.com/bazelbuild/rules_docker/container/go/pkg/utils"
 )
 
