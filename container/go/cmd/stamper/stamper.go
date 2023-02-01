@@ -10,12 +10,16 @@ import (
 	"github.com/bazelbuild/rules_docker/container/go/pkg/utils"
 )
 
-var stampInfoFile utils.ArrayStringFlags
+var (
+	stampInfoFile utils.ArrayStringFlags
+	dest          = flag.String("dest", "", "The destination location of the tag file to write to.")
+)
 
 func main() {
 
 	flag.Var(&stampInfoFile, "stamp-info-file", "The list of paths to the stamp info files used to substitute supported attribute when a python format placeholder is provivided in dst, e.g., {BUILD_USER}.")
 	dest := flag.String("dest", "", "The destination location of the tag file to write to.")
+	flag.Parse()
 
 	stamper, err := compat.NewStamper(stampInfoFile)
 	if err != nil {
