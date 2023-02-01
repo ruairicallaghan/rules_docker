@@ -146,7 +146,7 @@ def _impl(ctx):
     print("Stable file")
     print(ctx.info_file)
 
-    # stampd = ctx.actions.declare_file(ctx.label.name + ".stamp")
+    stampd = ctx.actions.declare_file(ctx.label.name + ".stamp")
     stamper_args += ["--dest", str(ctx.outputs.stamp.path)]
     ctx.actions.expand_template(
         template = ctx.file.stamp_tpl,
@@ -154,7 +154,7 @@ def _impl(ctx):
             "%{args}": " ".join(stamper_args),
             "%{container_stamper}": _get_runfile_path(ctx, ctx.executable._stamper),
         }
-        outputs =[ctx.outputs.stamp,
+        output = stampd,
         is_executable = True,
     )
 
