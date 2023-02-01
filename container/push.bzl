@@ -150,7 +150,7 @@ def _impl(ctx):
     ctx.actions.run(
         executable = ctx.executable._stamper,
         arguments = stamper_args,
-        output = stamd,
+        output = stampd,
     )
 
     # print("Writing SHA to file.")
