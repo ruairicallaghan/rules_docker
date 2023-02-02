@@ -75,7 +75,8 @@ def _impl(ctx):
     print(stamp_inputs)
     for f in stamp_inputs:
         pusher_args += ["-stamp-info-file", "%s" % _get_runfile_path(ctx, f)]
-        stamper_args += ["-stamp-info-file", "%s" % f.path]
+        # stamper_args += ["-stamp-info-file", "%s" % f.path]
+        stamper_args += ["-stamp-info-file", "%s" % ctx.info_file.path]
     pusher_input += stamp_inputs
 
     # Construct container_parts for input to pusher.
