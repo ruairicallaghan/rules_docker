@@ -25,7 +25,7 @@ func main() {
 		log.Fatalf("Failed to initialize the stamper: %v", err)
 	}
 
-	dst := "gcr.io/{STABLE_PROJECT_ID}/examples/simple-deployment:{STABLE_COMMIT_SHA}"
+	dst := "{STABLE_COMMIT_SHA}"
 	stamped := stamper.Stamp(dst)
 	if stamped != dst {
 		log.Printf("Destination %s was resolved to %s after stamping.", dst, stamped)
