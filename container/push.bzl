@@ -145,6 +145,16 @@ def _impl(ctx):
     print(ctx.version_file.path)
     print("Stable file")
     print(ctx.info_file.path)
+    print("Bin dir")
+    print(ctx.bin_dir)
+    print("Build File Path")
+    print(ctx.build_file_path)
+    # print("")
+    # print()
+    # print("")
+    # print()
+    # print("")
+    # print()
 
     stampd = ctx.actions.declare_file(ctx.label.name + ".stamp")
     stamper_args += ["--dest", str(ctx.outputs.stamp.path)]
