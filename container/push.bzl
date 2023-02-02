@@ -182,7 +182,7 @@ def _impl(ctx):
     print("Stamper args")
     print(stamper_args)
     ctx.actions.run(
-        inputs = stamper_input,
+        # inputs = stamper_input,
         outputs = [ctx.outputs.stamp],
         executable = ctx.executable._stamper,
         arguments = stamper_args,
