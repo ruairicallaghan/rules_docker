@@ -176,6 +176,10 @@ def _impl(ctx):
     # )
 
     stamper_input += [ctx.info_file]
+    print("Stamper input")
+    print(stamper_input)
+    print("Stamper args")
+    print(stamper_args)
     ctx.actions.run(
         inputs = stamper_input,
         outputs = [ctx.outputs.stamp],
