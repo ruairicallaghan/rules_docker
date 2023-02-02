@@ -71,8 +71,6 @@ def _impl(ctx):
     print("Stamp Inputs")
     print(stamp_inputs)
     for f in stamp_inputs:
-        print("Would you stamp?")
-        print("Yes")
         pusher_args += ["-stamp-info-file", "%s" % _get_runfile_path(ctx, f)]
         stamper_args += ["-stamp-info-file", "%s" % f.path]
     pusher_input += stamp_inputs
@@ -109,6 +107,8 @@ def _impl(ctx):
     if ctx.attr.insecure_repository:
         pusher_args.append("-insecure-repository")
     digester_args += ["--dst", str(ctx.outputs.digest.path), "--format", str(ctx.attr.format)]
+    print("Digester Input")
+    print(digester_input)
     ctx.actions.run(
         inputs = digester_input,
         outputs = [ctx.outputs.digest],
