@@ -146,7 +146,7 @@ def _impl(ctx):
     print("Stable file")
     print(ctx.info_file.path)
     print("Bin dir")
-    print(ctx.bin_dir)
+    print(ctx.bin_dir.path)
     print("Build File Path")
     print(ctx.build_file_path)
     # print("")
