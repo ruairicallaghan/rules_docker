@@ -107,8 +107,12 @@ def _impl(ctx):
     if ctx.attr.insecure_repository:
         pusher_args.append("-insecure-repository")
     digester_args += ["--dst", str(ctx.outputs.digest.path), "--format", str(ctx.attr.format)]
+
     print("Digester Input")
     print(digester_input)
+    print("Digester Args")
+    print(digester_args)
+
     ctx.actions.run(
         inputs = digester_input,
         outputs = [ctx.outputs.digest],
