@@ -42,7 +42,10 @@ def _impl(ctx):
 
     pusher_args = []
     pusher_input = []
+
     stamper_args = []
+    stamper_input = []
+
     digester_args = []
     digester_input = []
 
@@ -172,10 +175,13 @@ def _impl(ctx):
     #     is_executable = True,
     # )
 
+    stamper_input += [ctx.info_file]
     ctx.actions.run(
+        inputs = stamper_input,
         outputs = [ctx.outputs.stamp],
         executable = ctx.executable._stamper,
         arguments = stamper_args,
+        tools = ctx.attr._stamper[DefaultInfo].default_runfiles.files,
     )
 
     # print("Writing SHA to file.")
