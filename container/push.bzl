@@ -59,8 +59,6 @@ def _impl(ctx):
         pusher_input.append(ctx.file.repository_file)
 
     tag = ctx.expand_make_variables("tag", ctx.attr.tag, {})
-    print("Tag is: ")
-    print(tag)
 
     # If a tag file is provided, override <tag> with tag value
     if ctx.file.tag_file:
@@ -68,11 +66,7 @@ def _impl(ctx):
         pusher_input.append(ctx.file.tag_file)
 
     stamp = ctx.attr.stamp[StampSettingInfo].value
-    print("Stamp")
-    print(stamp)
     stamp_inputs = [ctx.info_file, ctx.version_file] if stamp else []
-    print("Stamp Inputs")
-    print(stamp_inputs)
     for f in stamp_inputs:
         pusher_args += ["-stamp-info-file", "%s" % _get_runfile_path(ctx, f)]
         # stamper_args += ["-stamp-info-file", "%s" % f.path]
@@ -96,26 +90,17 @@ def _impl(ctx):
               "container_import instead.")
 
     pusher_args.append("--format={}".format(ctx.attr.format))
-    print("Pusher args")
-    print(pusher_args)
     pusher_args.append("--dst={registry}/{repository}:{tag}".format(
         registry = registry,
         repository = repository,
         tag = tag,
     ))
-    print("Pusher args")
-    print(pusher_args)
 
     if ctx.attr.skip_unchanged_digest:
         pusher_args.append("-skip-unchanged-digest")
     if ctx.attr.insecure_repository:
         pusher_args.append("-insecure-repository")
     digester_args += ["--dst", str(ctx.outputs.digest.path), "--format", str(ctx.attr.format)]
-
-    print("Digester Input")
-    print(digester_input)
-    print("Digester Args")
-    print(digester_args)
 
     ctx.actions.run(
         inputs = digester_input,
@@ -137,8 +122,6 @@ def _impl(ctx):
     runfiles = runfiles.merge(ctx.attr._pusher[DefaultInfo].default_runfiles)
 
     exe = ctx.actions.declare_file(ctx.label.name + ctx.attr.extension)
-    print("Exe is:")
-    print(exe)
     ctx.actions.expand_template(
         template = ctx.file.tag_tpl,
         output = exe,
@@ -149,38 +132,10 @@ def _impl(ctx):
         is_executable = True,
     )
 
-    print("Version file")
-    print(ctx.version_file.path)
-    print("Stable file")
-    print(ctx.info_file.path)
-    print("Bin dir")
-    print(ctx.bin_dir.path)
-    print("Build File Path")
-    print(ctx.build_file_path)
-    # print("")
-    # print()
-    # print("")
-    # print()
-    # print("")
-    # print()
-
     stampd = ctx.actions.declare_file(ctx.label.name + ".stamp")
     stamper_args += ["--dest", str(ctx.outputs.stamp.path)]
-    # ctx.actions.expand_template(
-    #     template = ctx.file.stamp_tpl,
-    #     substitutions = {
-    #         "%{args}": " ".join(stamper_args),
-    #         "%{container_stamper}": _get_runfile_path(ctx, ctx.executable._stamper),
-    #     },
-    #     output = stampd,
-    #     is_executable = True,
-    # )
 
     stamper_input += [ctx.info_file]
-    print("Stamper input")
-    print(stamper_input)
-    print("Stamper args")
-    print(stamper_args)
     ctx.actions.run(
         inputs = stamper_input,
         outputs = [ctx.outputs.stamp],
@@ -189,18 +144,9 @@ def _impl(ctx):
         tools = ctx.attr._stamper[DefaultInfo].default_runfiles.files,
     )
 
-    # print("Writing SHA to file.")
-    # sha = ctx.actions.declare_file(ctx.label.name + ".sha")
-    # ctx.actions.write(
-    #     output = sha,
-    #     content = tag, 
-    #     is_executable = False,
-    # )
-
     return [
         DefaultInfo(
             executable = exe,
-            # files = depset([sha]),
             runfiles = runfiles,
         ),
         OutputGroupInfo(
