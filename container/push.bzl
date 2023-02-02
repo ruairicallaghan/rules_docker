@@ -148,14 +148,20 @@ def _impl(ctx):
 
     stampd = ctx.actions.declare_file(ctx.label.name + ".stamp")
     stamper_args += ["--dest", str(ctx.outputs.stamp.path)]
-    ctx.actions.expand_template(
-        template = ctx.file.stamp_tpl,
-        substitutions = {
-            "%{args}": " ".join(stamper_args),
-            "%{container_stamper}": _get_runfile_path(ctx, ctx.executable._stamper),
-        },
-        output = stampd,
-        is_executable = True,
+    # ctx.actions.expand_template(
+    #     template = ctx.file.stamp_tpl,
+    #     substitutions = {
+    #         "%{args}": " ".join(stamper_args),
+    #         "%{container_stamper}": _get_runfile_path(ctx, ctx.executable._stamper),
+    #     },
+    #     output = stampd,
+    #     is_executable = True,
+    # )
+
+    ctx.actions.run(
+        outputs = [ctx.outputs.stamp],
+        executable = ctx.executable._stamper,
+        arguments = stamper_args,
     )
 
     # print("Writing SHA to file.")
@@ -179,7 +185,7 @@ def _impl(ctx):
             registry = registry,
             repository = repository,
             digest = ctx.outputs.digest,
-            sha = tag,
+            sha = ctx.outputs.stamp,
         ),
     ]
 
